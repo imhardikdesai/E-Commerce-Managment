@@ -1,34 +1,31 @@
 import React from "react";
 import {
   Box,
-  chakra,
   Container,
   Stack,
   Text,
-  Image,
   Flex,
+  Badge,
   VStack,
-  Button,
   Heading,
   SimpleGrid,
   StackDivider,
   useColorModeValue,
-  VisuallyHidden,
   List,
   ListItem,
 } from "@chakra-ui/react";
-import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
-import { MdLocalShipping } from "react-icons/md";
+import { MdOutlineDiscount, MdOutlineInventory2, MdOutlineCategory, MdStarOutline } from "react-icons/md";
+import { TbBrand4Chan } from 'react-icons/tb'
 
 import { useParams } from "react-router-dom";
 import DummyData from "../../constant/DummyData";
+import SliderImage from "./SliderImage";
 const ProductView = () => {
   const { productId } = useParams();
   const thisProduct = DummyData.products.find(
     (prod) => prod.id.toString() === productId
   );
   const {
-    id,
     title,
     description,
     price,
@@ -37,7 +34,7 @@ const ProductView = () => {
     stock,
     brand,
     category,
-    thumbnail,
+    images
   } = thisProduct;
   return (
     <>
@@ -48,7 +45,8 @@ const ProductView = () => {
           py={{ base: 18, md: 24 }}
         >
           <Flex>
-            <Image
+            <SliderImage images={images} />
+            {/* <Image
               rounded={"md"}
               alt={"product image"}
               src={thumbnail}
@@ -56,7 +54,7 @@ const ProductView = () => {
               align={"center"}
               w={"100%"}
               h={{ base: "100%", sm: "400px", lg: "500px" }}
-            />
+            /> */}
           </Flex>
           <Stack spacing={{ base: 6, md: 10 }}>
             <Box as={"header"}>
@@ -65,7 +63,7 @@ const ProductView = () => {
                 fontWeight={600}
                 fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
               >
-               {title}
+                {title}
               </Heading>
               <Text
                 color={useColorModeValue("gray.900", "gray.400")}
@@ -74,6 +72,8 @@ const ProductView = () => {
               >
                 ${price}.00 USD
               </Text>
+              <Badge variant='subtle' colorScheme='green'>{category}</Badge>
+
             </Box>
 
             <Stack
@@ -94,7 +94,7 @@ const ProductView = () => {
                   {description}
                 </Text>
               </VStack>
-              
+
               <Box>
                 <Text
                   fontSize={{ base: "16px", lg: "18px" }}
@@ -108,53 +108,50 @@ const ProductView = () => {
 
                 <List spacing={2}>
                   <ListItem>
-                    <Text as={"span"} fontWeight={"bold"}>
-                      Between lugs:
-                    </Text>{" "}
-                    20 mm
+                    <div className="d-flex align-items-center">
+                      <Text className="me-2" as={"span"} fontWeight={"bold"}>
+                        Brand:
+                      </Text>{" "}
+                      {brand} <TbBrand4Chan className="ms-2" />
+                    </div>
                   </ListItem>
                   <ListItem>
-                    <Text as={"span"} fontWeight={"bold"}>
-                      Bracelet:
-                    </Text>{" "}
-                    leather strap
+                    <div className="d-flex align-items-center">
+                      <Text className="me-2" as={"span"} fontWeight={"bold"}>
+                        Rating:
+                      </Text>{" "}
+                      {rating} <MdStarOutline className="ms-2" />
+                    </div>
                   </ListItem>
                   <ListItem>
-                    <Text as={"span"} fontWeight={"bold"}>
-                      Case:
-                    </Text>{" "}
-                    Steel
+                    <div className="d-flex align-items-center">
+                      <Text className="me-2" as={"span"} fontWeight={"bold"}>
+                        Discount:
+                      </Text>{" "}
+                      {discountPercentage}% <MdOutlineDiscount className="ms-2" />
+                    </div>
                   </ListItem>
                   <ListItem>
-                    <Text as={"span"} fontWeight={"bold"}>
-                      Case diameter:
-                    </Text>{" "}
-                    42 mm
+                    <div className="d-flex align-items-center">
+                      <Text className="me-2" as={"span"} fontWeight={"bold"}>
+                        Available Stock:
+                      </Text>{" "}
+                      {stock} <MdOutlineInventory2 className="ms-2" />
+                    </div>
                   </ListItem>
                   <ListItem>
-                    <Text as={"span"} fontWeight={"bold"}>
-                      Dial color:
-                    </Text>{" "}
-                    Black
-                  </ListItem>
-                  <ListItem>
-                    <Text as={"span"} fontWeight={"bold"}>
-                      Crystal:
-                    </Text>{" "}
-                    Domed, scratch‑resistant sapphire crystal with
-                    anti‑reflective treatment inside
-                  </ListItem>
-                  <ListItem>
-                    <Text as={"span"} fontWeight={"bold"}>
-                      Water resistance:
-                    </Text>{" "}
-                    5 bar (50 metres / 167 feet){" "}
+                    <div className="d-flex align-items-center">
+                      <Text className="me-2" as={"span"} fontWeight={"bold"}>
+                        Category:
+                      </Text>{" "}
+                      {category.toUpperCase()} <MdOutlineCategory className="ms-2" />
+                    </div>
                   </ListItem>
                 </List>
               </Box>
             </Stack>
 
-           
+
           </Stack>
         </SimpleGrid>
       </Container>

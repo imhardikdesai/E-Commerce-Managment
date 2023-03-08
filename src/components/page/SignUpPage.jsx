@@ -33,7 +33,7 @@ export default function SignUpPage() {
             Sign up
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool features ✌️
+            to view all of our cool products ✌️
           </Text>
         </Stack>
         <Box
@@ -61,21 +61,17 @@ export default function SignUpPage() {
               <FormLabel>Email address</FormLabel>
               <Input type="email" />
             </FormControl>
+            <FormControl id="mobile" isRequired>
+              <FormLabel>Mobile Number</FormLabel>
+              <Input type="tel" />
+            </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
-              <InputGroup>
-                <Input type={showPassword ? "text" : "password"} />
-                <InputRightElement h={"full"}>
-                  <Button
-                    variant={"ghost"}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
+              <Input type={showPassword ? "text" : "password"} />
+            </FormControl>
+            <FormControl id="cPassword" isRequired>
+              <FormLabel>Confirm Password</FormLabel>
+              <Input type={showPassword ? "text" : "password"} />
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button

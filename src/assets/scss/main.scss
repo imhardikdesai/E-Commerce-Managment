@@ -6,3 +6,24 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.css-r6z5ec {
+  z-index: 100 !important;
+}
+
+.slick-track {
+  :first-child {
+    background-size: contain !important;
+    background-position: top !important;
+  }
+
+  :nth-child(2) {
+    background-size: contain !important;
+    background-position: top !important;
+  }
+
+  :nth-child(3) {
+    background-size: contain !important;
+    background-position: top !important;
+  }
+}

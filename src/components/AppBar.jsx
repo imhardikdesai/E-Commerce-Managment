@@ -76,7 +76,7 @@ export default function AppBar() {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <Menu>
+            <Menu >
               <MenuButton
                 as={Button}
                 rounded={"full"}
