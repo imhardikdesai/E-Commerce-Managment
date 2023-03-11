@@ -16,13 +16,14 @@ import {
 } from "@chakra-ui/react";
 import { MdOutlineDiscount, MdOutlineInventory2, MdOutlineCategory, MdStarOutline } from "react-icons/md";
 import { TbBrand4Chan } from 'react-icons/tb'
-
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import DummyData from "../../constant/DummyData";
+// import DummyData from "../../constant/DummyData";
 import SliderImage from "./SliderImage";
 const ProductView = () => {
   const { productId } = useParams();
-  const thisProduct = DummyData.products.find(
+  const productData = useSelector((state) => state.fetch.productData);
+  const thisProduct = productData.products && productData.products.find(
     (prod) => prod.id.toString() === productId
   );
   const {

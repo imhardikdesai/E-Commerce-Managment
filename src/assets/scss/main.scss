@@ -6,7 +6,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 .css-r6z5ec {
   z-index: 100 !important;
 }
@@ -26,4 +25,14 @@
     background-size: contain !important;
     background-position: top !important;
   }
+}
+
+.row {
+  --bs-gutter-x: 0 !important;
+}
+
+.pagination-footer {
+  position: sticky;
+  bottom: 14px;
+  z-index: 10;
 }
