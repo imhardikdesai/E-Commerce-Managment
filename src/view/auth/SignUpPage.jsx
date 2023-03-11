@@ -20,12 +20,21 @@ import { authSetData } from "../../redux/actions/authActions";
 import CheckUserAuth from "../../functions/CheckUserAuth";
 import SetLocalData from "../../functions/SetLocalData";
 import GetEncryptText from "../../functions/GetEncryptText";
+import { useEffect } from "react";
 
 export default function SignUpPage() {
   const notify = () => toast.error("User Already Exists");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    let login = JSON.parse(localStorage.getItem('isLogin'))
+    if (login) {
+      navigate('/products')
+    } else {
+      navigate('/signup')
+    }
+    // eslint-disable-next-line
+  }, [navigate])
   const initialValues = {
     firstName: "John",
     lastName: "Doe",
@@ -41,11 +50,13 @@ export default function SignUpPage() {
     if (localStorage.getItem("loginData") === null) {
       SetLocalData(encData);
       navigate("/products");
+      localStorage.setItem('isLogin', true)
     } else if (CheckUserAuth(values)) {
       notify();
     } else {
       SetLocalData(encData);
       navigate("/products");
+      localStorage.setItem('isLogin', true)
     }
   };
 

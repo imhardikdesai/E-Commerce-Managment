@@ -1,6 +1,6 @@
 const SetLocalData = (USER_DATA) => {
     let loginArr = [];
-    localStorage.setItem('isLogin', true)
+    // localStorage.setItem('isLogin', true)
     let loginData = localStorage.getItem("loginData")
     if (loginData === null) {
         loginArr = []

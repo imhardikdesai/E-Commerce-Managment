@@ -17,11 +17,22 @@ import { useFormik } from "formik";
 import IsHaveAccount from "../../functions/IsHaveAccount";
 import { useDispatch } from "react-redux";
 import { authSetStatus } from "../../redux/actions/authActions";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const notify = () => toast.error("Invalid Credentials");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  useEffect(() => {
+    let login = JSON.parse(localStorage.getItem('isLogin'))
+    if (login) {
+      navigate('/products')
+    } else {
+      navigate('/login')
+    }
+    
+  }, [navigate])
+
   const initialValues = {
     email: "temp@mail.com",
     password: "hardik@00110",
@@ -35,6 +46,8 @@ export default function LoginPage() {
       notify();
     }
   };
+
+ 
   const validate = (values) => {
     let errors = {};
 
