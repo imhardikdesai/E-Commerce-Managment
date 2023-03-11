@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileDetails from "../common/ProfileDetails";
+import ProfileDetails from "../../components/common/ProfileDetails";
 import toast, { Toaster } from "react-hot-toast";
 const notify = () => toast.success("Profile Updated Successfully!");
 

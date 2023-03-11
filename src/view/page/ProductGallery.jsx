@@ -7,7 +7,7 @@ import {
   updateFetchProduct,
 } from "../../redux/actions/fetchActions";
 import { Pagination } from "react-bootstrap";
-import ProductDetail from "../common/ProductDetail";
+import ProductDetail from "../../components/common/ProductDetail";
 import { Vortex } from "react-loader-spinner";
 
 const ProductGallery = () => {

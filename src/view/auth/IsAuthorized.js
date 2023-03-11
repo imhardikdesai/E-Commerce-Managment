@@ -30,7 +30,7 @@ const IsAuthorized = (props) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        let login = localStorage.getItem('isLogin')
+        let login = false
         if (!login) {
             navigate('/login')
         }

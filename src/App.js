@@ -1,14 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
 import AppBar from './components/AppBar';
 import ProductView from './components/common/ProductView';
-import ChangePassword from './components/auth/ChangePassword';
-import ErrorPage from './components/auth/ErrorPage';
-import Home from './components/page/Home';
-import LoginPage from './components/auth/LoginPage';
-import ProductGallery from './components/page/ProductGallery';
-import Profile from './components/page/Profile';
-import SignUpPage from './components/auth/SignUpPage';
-import IsAuthorized from './components/auth/IsAuthorized';
+import ChangePassword from './view/auth/ChangePassword';
+import ErrorPage from './view/auth/ErrorPage';
+import Home from './view/page/Home';
+import LoginPage from './view/auth/LoginPage';
+import ProductGallery from './view/page/ProductGallery';
+import Profile from './view/page/Profile';
+import SignUpPage from './view/auth/SignUpPage';
+import IsAuthorized from './view/auth/IsAuthorized';
 import { useSelector } from 'react-redux';
 // import PrivateRoutes from './components/auth/PrivateRoutes';
 function App() {
