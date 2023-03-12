@@ -2,21 +2,23 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useFormik } from "formik";
 import GetProfileData from "../../functions/GetProfileData";
 import { Form } from "react-bootstrap";
 import SetProfileData from "../../functions/SetProfileData";
+import { updateProfile } from "../../validation/userValidation";
 
 export default function ProfileDetails() {
-  const [currentUser, setCurrentUser] = useState(GetProfileData())
+  const [currentUser] = useState(GetProfileData())
 
   let initialValues = {
     firstName: currentUser.firstName,
@@ -29,7 +31,7 @@ export default function ProfileDetails() {
   const handleUpdateProfile = (values) => {
     SetProfileData(values)
     // if (SetProfileData(values)) {
-      toast.success('Profile updated successfully!')
+    toast.success('Profile updated successfully!')
     // } else {
     //   toast.error('Email address already exists')
     // }
@@ -37,11 +39,10 @@ export default function ProfileDetails() {
 
   const formik = useFormik({
     initialValues,
-    onSubmit: handleUpdateProfile
+    onSubmit: handleUpdateProfile,
+    validationSchema: updateProfile
   })
-  // useEffect(() => {
-  //   setCurrentUser(GetProfileData())
-  // }, [])
+
 
   return (
     <Flex
@@ -65,7 +66,7 @@ export default function ProfileDetails() {
             User Profile Edit
           </Heading>
 
-          <FormControl id="firstName" >
+          <FormControl id="firstName" isInvalid={formik.errors.firstName && formik.touched.firstName}>
             <FormLabel>First name</FormLabel>
             <Input
               placeholder="First Name"
@@ -73,7 +74,9 @@ export default function ProfileDetails() {
               type="text"
               value={formik.values.firstName}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.firstName && <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>}
           </FormControl>
           <FormControl id="lastName" >
             <FormLabel>Last name</FormLabel>
@@ -85,7 +88,7 @@ export default function ProfileDetails() {
               onChange={formik.handleChange}
             />
           </FormControl>
-          <FormControl id="email" >
+          <FormControl id="email" isInvalid={formik.errors.email && formik.touched.email}>
             <FormLabel>Email address</FormLabel>
             <Input
               placeholder="your-email@example.com"
@@ -93,9 +96,11 @@ export default function ProfileDetails() {
               type="email"
               value={formik.values.email}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.email && <FormErrorMessage>{formik.errors.email}</FormErrorMessage>}
           </FormControl>
-          <FormControl id="mobile" >
+          <FormControl id="mobile" isInvalid={formik.errors.mobile && formik.touched.mobile}>
             <FormLabel>Mo no</FormLabel>
             <Input
               placeholder="+91 983** ****5"
@@ -103,7 +108,9 @@ export default function ProfileDetails() {
               type="tel"
               value={formik.values.mobile}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.mobile && <FormErrorMessage>{formik.errors.mobile}</FormErrorMessage>}
           </FormControl>
 
           <Stack mt='2' spacing={6} direction={["column", "row"]}>

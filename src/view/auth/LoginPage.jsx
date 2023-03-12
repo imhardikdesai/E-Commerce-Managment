@@ -9,6 +9,7 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import toast from "react-hot-toast";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
@@ -17,6 +18,7 @@ import { useFormik } from "formik";
 import IsHaveAccount from "../../functions/IsHaveAccount";
 import { useEffect } from "react";
 import GetEncryptText from "../../functions/GetEncryptText";
+import { loginSchema } from "../../validation/authValidation";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -41,7 +43,10 @@ export default function LoginPage() {
       localStorage.setItem('authToken', authToken)
       navigate("/products");
       toast.success('Great to see you again! You\'ve been logged in', {
-        duration: 2700,
+        duration: 3000,
+        style: {
+          textAlign: 'center',
+        },
       })
     } else {
       toast.error("Invalid Credentials")
@@ -49,26 +54,11 @@ export default function LoginPage() {
   };
 
 
-  const validate = (values) => {
-    let errors = {};
 
-    if (!values.email) {
-      errors.email = "This field is required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Invalid email";
-    }
-    if (!values.password) {
-      errors.password = "This field is required";
-    }
-
-    return errors;
-  };
   const formik = useFormik({
     initialValues,
     onSubmit,
-    validate,
+    validationSchema: loginSchema
   });
   return (
     <>
@@ -94,21 +84,25 @@ export default function LoginPage() {
           >
             <Form onSubmit={formik.handleSubmit}>
               <Stack spacing={4}>
-                <FormControl id="email">
+                <FormControl id="email" isInvalid={formik.errors.email && formik.touched.email}>
                   <FormLabel>Email address</FormLabel>
                   <Input
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.email}
                     type="email"
                   />
+                  {formik.touched.email && <FormErrorMessage>{formik.errors.email}</FormErrorMessage>}
                 </FormControl>
-                <FormControl id="password">
+                <FormControl id="password" isInvalid={formik.errors.password && formik.touched.password}>
                   <FormLabel>Password</FormLabel>
                   <Input
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     type="password"
                   />
+                  {formik.touched.password && <FormErrorMessage>{formik.errors.password}</FormErrorMessage>}
                 </FormControl>
                 <Stack spacing={10}>
                   <Stack

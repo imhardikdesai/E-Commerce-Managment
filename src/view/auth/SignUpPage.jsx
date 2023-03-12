@@ -10,6 +10,7 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import toast from "react-hot-toast";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
@@ -21,6 +22,7 @@ import CheckUserAuth from "../../functions/CheckUserAuth";
 import SetLocalData from "../../functions/SetLocalData";
 import GetEncryptText from "../../functions/GetEncryptText";
 import { useEffect } from "react";
+import { signupSchema } from "../../validation/authValidation";
 
 export default function SignUpPage() {
   const navigate = useNavigate();
@@ -35,13 +37,21 @@ export default function SignUpPage() {
     // eslint-disable-next-line
   }, [navigate])
   const initialValues = {
-    firstName: "John",
-    lastName: "Doe",
+    firstName: "",
+    lastName: "",
     email: "temp@mail.com",
-    mobile: "6352604118",
-    password: "hardik@00110",
-    cPassword: "hardik@00110",
+    mobile: "",
+    password: "",
+    cPassword: "",
   };
+  // const initialValues = {
+  //   firstName: "John",
+  //   lastName: "Doe",
+  //   email: "temp@mail.com",
+  //   mobile: "6352604118",
+  //   password: "hardik@00110",
+  //   cPassword: "hardik@00110",
+  // };
   const onSubmit = (values) => {
     const encData = GetEncryptText(values);
     const authToken = GetEncryptText((values.email + ',' + values.password))
@@ -65,37 +75,15 @@ export default function SignUpPage() {
     }
   };
 
-  const validate = (values) => {
-    let errors = {};
-    if (!values.firstName) {
-      errors.firstName = "This field is required";
-    }
-    if (!values.email) {
-      errors.email = "This field is required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Invalid email";
-    }
-    if (!values.mobile) {
-      errors.mobile = "This field is required";
-    }
-    if (!values.password || !values.cPassword) {
-      errors.password = "This field is required";
-      errors.cPassword = "This field is required";
-    }
 
-    return errors;
-  };
   const formik = useFormik({
     initialValues,
     onSubmit,
-    validate,
+    validationSchema: signupSchema
   });
-
+  console.log(formik.errors);
   return (
     <>
-
       <Flex
         minH={"100vh"}
         align={"center"}
@@ -121,13 +109,15 @@ export default function SignUpPage() {
               <Form onSubmit={formik.handleSubmit}>
                 <HStack>
                   <Box>
-                    <FormControl id="firstName" isRequired>
+                    <FormControl id="firstName" isInvalid={formik.touched.firstName && formik.errors.firstName}>
                       <FormLabel>First Name</FormLabel>
                       <Input
                         value={formik.values.firstName}
                         onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         type="text"
                       />
+                      {formik.touched.firstName && <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>}
                     </FormControl>
                   </Box>
                   <Box>
@@ -141,37 +131,50 @@ export default function SignUpPage() {
                     </FormControl>
                   </Box>
                 </HStack>
-                <FormControl id="email" isRequired>
+
+                <FormControl id="email" isInvalid={formik.touched.email && formik.errors.email}>
                   <FormLabel>Email address</FormLabel>
                   <Input
                     value={formik.values.email}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     type="email"
                   />
+                  {formik.touched.email && <FormErrorMessage>{formik.errors.email}</FormErrorMessage>}
                 </FormControl>
-                <FormControl id="mobile" isRequired>
+
+                <FormControl id="mobile" isInvalid={formik.touched.mobile && formik.errors.mobile}>
                   <FormLabel>Mobile Number</FormLabel>
                   <Input
                     value={formik.values.mobile}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     type="tel"
                   />
+                  {formik.touched.mobile && <FormErrorMessage>{formik.errors.mobile}</FormErrorMessage>}
                 </FormControl>
-                <FormControl id="password" isRequired>
+
+                <FormControl id="password" isInvalid={formik.touched.password && formik.errors.password}>
                   <FormLabel>Password</FormLabel>
                   <Input
                     value={formik.values.password}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     type="password"
                   />
+                  {formik.touched.password && <FormErrorMessage>{formik.errors.password}</FormErrorMessage>}
+
                 </FormControl>
-                <FormControl id="cPassword" isRequired>
+                <FormControl id="cPassword" isInvalid={formik.touched.cPassword && formik.errors.cPassword}>
                   <FormLabel>Confirm Password</FormLabel>
                   <Input
                     value={formik.values.cPassword}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     type="password"
                   />
+                  {formik.touched.cPassword && <FormErrorMessage>{formik.errors.cPassword}</FormErrorMessage>}
+
                 </FormControl>
 
                 <Stack spacing={10} pt={2}>

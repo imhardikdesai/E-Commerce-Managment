@@ -8,7 +8,7 @@ import {
 } from "../../redux/actions/fetchActions";
 import { Pagination } from "react-bootstrap";
 import ProductDetail from "../../components/common/ProductDetail";
-import { Vortex } from "react-loader-spinner";
+import Loader from "../../components/common/Loader";
 
 const ProductGallery = () => {
   const dispatch = useDispatch();
@@ -42,16 +42,7 @@ const ProductGallery = () => {
   return (
     <>
       {loading && (
-        <div className="d-flex justify-content-center mt-5">
-          <Vortex
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="vortex-loading"
-            wrapperClass="vortex-wrapper"
-            colors={["red", "green", "blue", "yellow", "orange", "purple"]}
-          />
-        </div>
+        <Loader />
       )}
       <Row>
         {productData.products &&

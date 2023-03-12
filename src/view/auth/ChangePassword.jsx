@@ -42,11 +42,11 @@ export default function ChangePassword() {
           p={6}
           my={12}
         >
-          <Form onSubmit={formik.handleSubmit}>
 
-            <Heading lineHeight={1.1} fontSize={{ base: "2xl", md: "3xl" }}>
-              Change password
-            </Heading>
+          <Heading lineHeight={1.1} fontSize={{ base: "2xl", md: "3xl" }}>
+            Change password
+          </Heading>
+          <Form onSubmit={formik.handleSubmit}>
             <FormControl id="passwordCurrent" isRequired>
               <FormLabel>Current Password</FormLabel>
               <Input type="password" />
