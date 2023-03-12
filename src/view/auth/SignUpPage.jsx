@@ -11,7 +11,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
@@ -23,7 +23,6 @@ import GetEncryptText from "../../functions/GetEncryptText";
 import { useEffect } from "react";
 
 export default function SignUpPage() {
-  const notify = () => toast.error("User Already Exists");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -45,18 +44,24 @@ export default function SignUpPage() {
   };
   const onSubmit = (values) => {
     const encData = GetEncryptText(values);
+    const authToken = GetEncryptText((values.email + ',' + values.password))
     dispatch(authSetData(values));
 
     if (localStorage.getItem("loginData") === null) {
-      SetLocalData(encData);
+      SetLocalData(encData, true, authToken);
       navigate("/products");
-      localStorage.setItem('isLogin', true)
+      toast.success('Congratulations, your account has been created successfully!', {
+        duration: 3000,
+      })
+
     } else if (CheckUserAuth(values)) {
-      notify();
+      toast.error('User Already Exists')
     } else {
-      SetLocalData(encData);
+      SetLocalData(encData, true, authToken);
       navigate("/products");
-      localStorage.setItem('isLogin', true)
+      toast.success('Congratulations, your account has been created successfully!', {
+        duration: 3000,
+      })
     }
   };
 
@@ -90,7 +95,6 @@ export default function SignUpPage() {
 
   return (
     <>
-      <Toaster />
 
       <Flex
         minH={"100vh"}
@@ -103,7 +107,7 @@ export default function SignUpPage() {
             <Heading fontSize={"4xl"} textAlign={"center"}>
               Sign up
             </Heading>
-            <Text fontSize={"lg"} color={"gray.600"}>
+            <Text _dark={{ color: 'gray.300' }} fontSize={"lg"} color={"gray.600"}>
               to view all of our cool products ✌️
             </Text>
           </Stack>

@@ -8,8 +8,22 @@ import {
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useFormik } from "formik";
+import { Form } from "react-bootstrap";
+import { toast } from "react-hot-toast";
 
 export default function ChangePassword() {
+  const initialValues = {
+
+  }
+  const handleUpdatePassword = () => {
+    toast.success('Password updated successfully!')
+  }
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit: handleUpdatePassword
+  })
   return (
     <>
       <Flex
@@ -28,34 +42,39 @@ export default function ChangePassword() {
           p={6}
           my={12}
         >
-          <Heading lineHeight={1.1} fontSize={{ base: "2xl", md: "3xl" }}>
-            Change password
-          </Heading>
+          <Form onSubmit={formik.handleSubmit}>
 
-          <FormControl id="passwordCurrent" isRequired>
-            <FormLabel>Current Password</FormLabel>
-            <Input type="password" />
-          </FormControl>
-          <FormControl id="passwordNew" isRequired>
-            <FormLabel>New Password</FormLabel>
-            <Input type="password" />
-          </FormControl>
-          <FormControl id="passwordNewConfirm" isRequired>
-            <FormLabel>Confirm Password</FormLabel>
-            <Input type="password" />
-          </FormControl>
+            <Heading lineHeight={1.1} fontSize={{ base: "2xl", md: "3xl" }}>
+              Change password
+            </Heading>
+            <FormControl id="passwordCurrent" isRequired>
+              <FormLabel>Current Password</FormLabel>
+              <Input type="password" />
+            </FormControl>
+            <FormControl id="passwordNew" isRequired>
+              <FormLabel>New Password</FormLabel>
+              <Input type="password" />
+            </FormControl>
+            <FormControl id="passwordNewConfirm" isRequired>
+              <FormLabel>Confirm Password</FormLabel>
+              <Input type="password" />
+            </FormControl>
 
-          <Stack spacing={6}>
-            <Button
-              bg={"green.500"}
-              color={"white"}
-              _hover={{
-                bg: "green.500",
-              }}
-            >
-              Update Password
-            </Button>
-          </Stack>
+            <Stack spacing={6}>
+              <Button
+                type="submit"
+                bg={"green.500"}
+                color={"white"}
+                _hover={{
+                  bg: "green.500",
+                }}
+              >
+                Update Password
+              </Button>
+            </Stack>
+
+
+          </Form>
         </Stack>
       </Flex>
     </>

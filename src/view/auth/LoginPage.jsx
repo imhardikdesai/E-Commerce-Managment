@@ -10,19 +10,16 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { useFormik } from "formik";
 import IsHaveAccount from "../../functions/IsHaveAccount";
-import { useDispatch } from "react-redux";
-import { authSetStatus } from "../../redux/actions/authActions";
 import { useEffect } from "react";
+import GetEncryptText from "../../functions/GetEncryptText";
 
 export default function LoginPage() {
-  const notify = () => toast.error("Invalid Credentials");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   useEffect(() => {
     let login = JSON.parse(localStorage.getItem('isLogin'))
     if (login) {
@@ -30,7 +27,7 @@ export default function LoginPage() {
     } else {
       navigate('/login')
     }
-    
+
   }, [navigate])
 
   const initialValues = {
@@ -38,16 +35,20 @@ export default function LoginPage() {
     password: "hardik@00110",
   };
   const onSubmit = (values) => {
+    const authToken = GetEncryptText((values.email + ',' + values.password))
     if (IsHaveAccount(values)) {
       localStorage.setItem("isLogin", true);
-      dispatch(authSetStatus(true));
+      localStorage.setItem('authToken', authToken)
       navigate("/products");
+      toast.success('Great to see you again! You\'ve been logged in', {
+        duration: 2700,
+      })
     } else {
-      notify();
+      toast.error("Invalid Credentials")
     }
   };
 
- 
+
   const validate = (values) => {
     let errors = {};
 
@@ -71,7 +72,6 @@ export default function LoginPage() {
   });
   return (
     <>
-      <Toaster />
 
       <Flex
         minH={"100vh"}
@@ -82,7 +82,7 @@ export default function LoginPage() {
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
           <Stack align={"center"}>
             <Heading fontSize={"4xl"}>Log in to your account</Heading>
-            <Text fontSize={"lg"} color={"gray.600"}>
+            <Text _dark={{ color: 'gray.300' }} fontSize={"lg"} color={"gray.600"}>
               to view all of our cool products 🛒
             </Text>
           </Stack>

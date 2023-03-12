@@ -18,7 +18,6 @@ import { MdOutlineDiscount, MdOutlineInventory2, MdOutlineCategory, MdStarOutlin
 import { TbBrand4Chan } from 'react-icons/tb'
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-// import DummyData from "../../constant/DummyData";
 import SliderImage from "./SliderImage";
 const ProductView = () => {
   const { productId } = useParams();
@@ -88,6 +87,9 @@ const ProductView = () => {
             >
               <VStack spacing={{ base: 4, sm: 6 }}>
                 <Text
+                  textAlign={'start'}
+                  width={'100%'}
+                  _dark={{ color: 'gray.300' }}
                   color={useColorModeValue("gray.500", "gray.400")}
                   fontSize={"2xl"}
                   fontWeight={"300"}

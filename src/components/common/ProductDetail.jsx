@@ -33,6 +33,7 @@ const ProductDetail = ({
             p={6}
             maxW={"330px"}
             w={"full"}
+            _dark={{ backgroundColor: '#2D3748' }}
             bg={useColorModeValue("white", "gray.800")}
             boxShadow={"2xl"}
             rounded={"lg"}
@@ -72,6 +73,7 @@ const ProductDetail = ({
             </Box>
             <Stack pt={10} align={"center"}>
               <Text
+                _dark={{ color: 'gray.400' }}
                 color={"gray.500"}
                 fontSize={"sm"}
                 textTransform={"uppercase"}
@@ -87,14 +89,14 @@ const ProductDetail = ({
                   color={useColorModeValue("gray.700", "gray.400")}
                   px={3}
                 >
-                  Actress, musician, songwriter and artist. PM for work inquires
-                  or me in your posts
+                  {description}
                 </Text>
 
                 <Text fontWeight={800} fontSize={"xl"}>
                   ${price}
                 </Text>
                 <Text
+                  _dark={{ color: 'gray.300' }}
                   display={"flex"}
                   alignItems="center"
                   fontStyle={"italic"}
