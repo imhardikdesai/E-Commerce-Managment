@@ -1,3 +1,7 @@
+/**
+ * It gets the current user's data from localStorage
+ * @returns The current user's data.
+ */
 import GetDecryptText from "./GetDecryptText"
 
 

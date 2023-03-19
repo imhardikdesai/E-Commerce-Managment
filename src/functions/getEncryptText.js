@@ -1,3 +1,4 @@
+/* Encrypting the text. */
 import CryptoJS from "crypto-js";
 const secretPass = "XkhZG4fW2t2W";
 

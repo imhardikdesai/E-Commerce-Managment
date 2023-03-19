@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 
+/* This is a validation schema for the password field. */
 export const passwordSchema = Yup.string()
     .min(8, 'Password must be at least 8 characters')
     .max(32, 'Password cannot be more than 32 characters')

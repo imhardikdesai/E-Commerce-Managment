@@ -13,6 +13,7 @@ import Loader from "../../components/common/Loader";
 const ProductGallery = () => {
   const dispatch = useDispatch();
   const productData = useSelector((state) => state.fetch.productData);
+  const total = useSelector((state) => state.fetch.total);
   const skip = useSelector((state) => state.fetch.skip);
   const limit = useSelector((state) => state.fetch.limit);
   const loading = useSelector((state) => state.fetch.loading);
@@ -26,24 +27,24 @@ const ProductGallery = () => {
     setActive(index);
     dispatch(updateFetchProduct(index * limit, limit));
   };
-  const items =
-    productData.products &&
-    productData.products.map((item, index) => {
-      return (
-        <Pagination.Item
-          onClick={() => handlePageClick(index)}
-          key={item.id}
-          active={active === index}
-        >
-          {index + 1}
-        </Pagination.Item>
-      );
-    });
+
+  let items = [];
+  for (let number = 0; number <= total / limit; number++) {
+    items.push(
+      <Pagination.Item
+        onClick={() => handlePageClick(number)}
+        key={number}
+        active={active === number}
+      >
+        {number + 1}
+      </Pagination.Item>
+    );
+  }
+
+
   return (
     <>
-      {loading && (
-        <Loader />
-      )}
+      {loading && <Loader />}
       <Row>
         {productData.products &&
           !loading &&

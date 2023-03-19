@@ -1,3 +1,4 @@
+/* Importing the Vortex component from the react-loader-spinner package. */
 import React from 'react'
 import { Vortex } from 'react-loader-spinner'
 

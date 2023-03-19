@@ -1,3 +1,4 @@
+/* A reducer function. */
 import CheckUserAuth from "../../functions/CheckUserAuth";
 import { AUTH_SET_DATA, AUTH_SET_STATUS } from "../actionTypes/authTypes"
 const initialData = {
@@ -7,6 +8,7 @@ const initialData = {
 
 const authReducer = (state = initialData, action) => {
     switch (action.type) {
+       /* Checking if the user is logged in or not. */
         case AUTH_SET_DATA:
             let isLogin = false
             let tempData = [...state.userData]
@@ -25,6 +27,7 @@ const authReducer = (state = initialData, action) => {
             }
 
 
+       /* Setting the status of the user. */
         case AUTH_SET_STATUS: {
             return {
                 ...state,

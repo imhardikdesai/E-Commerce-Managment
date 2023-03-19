@@ -5,10 +5,16 @@ const initialData = {
     error: '',
     productData: [],
     skip: 0,
-    limit: 10
+    limit: 8,
+    total: 0
 }
 
 
+/**
+ * It takes in the current state and an action, and returns the next state
+ * @param [state] - This is the current state of the reducer.
+ * @param action - This is the action object that is dispatched from the action creator.
+ */
 const fetchReducer = (state = initialData, action) => {
     switch (action.type) {
 
@@ -23,7 +29,8 @@ const fetchReducer = (state = initialData, action) => {
                 ...state,
                 loading: false,
                 productData: action.payLoad,
-                error: ''
+                error: '',
+                total: action.payLoad.total
             }
         case FETCH_PRODUCT_FAILURE:
             return {

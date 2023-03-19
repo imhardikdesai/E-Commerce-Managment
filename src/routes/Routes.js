@@ -9,6 +9,11 @@ import SignUpPage from '../view/auth/SignUpPage';
 import ProductGallery from '../view/page/ProductGallery';
 import Profile from '../view/page/Profile';
 
+/**
+ * It renders a Routes component that contains a Route component that renders a PrivateRoutes component
+ * that contains a Route component that renders a Navigate component that redirects to the products
+ * page
+ */
 const RoutesPath = () => (
     <Routes >
         <Route element={<PrivateRoutes />}>

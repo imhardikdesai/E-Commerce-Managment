@@ -1,3 +1,4 @@
+/* A validation schema for mobile number. */
 import * as Yup from 'yup';
 
 export const mobileSchema = Yup.string()

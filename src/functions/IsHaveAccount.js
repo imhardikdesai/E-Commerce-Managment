@@ -1,3 +1,7 @@
+/**
+ * It checks if the user is already registered in the local storage
+ * @param loginFormData - The data entered by the user in the login form.
+ */
 
 import GetDecryptText from "./GetDecryptText"
 const IsHaveAccount = (loginFormData) => {

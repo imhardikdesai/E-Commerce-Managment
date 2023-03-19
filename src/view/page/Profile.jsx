@@ -1,7 +1,8 @@
 import React from "react";
 import ProfileDetails from "../../components/common/ProfileDetails";
 import toast, { Toaster } from "react-hot-toast";
-const notify = () => toast.success("Profile Updated Successfully!");
+import { messages } from "../../constant/messages";
+const notify = () => toast.success(messages.profileUpdate);
 
 const Profile = () => {
   return (

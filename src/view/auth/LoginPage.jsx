@@ -17,52 +17,73 @@ import { Form } from "react-bootstrap";
 import { useFormik } from "formik";
 import IsHaveAccount from "../../functions/IsHaveAccount";
 import { useEffect } from "react";
-import GetEncryptText from "../../functions/GetEncryptText";
 import { loginSchema } from "../../validation/authValidation";
+import GetDecryptText from "../../functions/GetDecryptText";
+import GetEncryptText from '../../functions/GetEncryptText'
+import { messages } from "../../constant/messages";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   useEffect(() => {
-    let login = JSON.parse(localStorage.getItem('isLogin'))
-    if (login) {
-      navigate('/products')
-    } else {
-      navigate('/login')
+    let login = JSON.parse(localStorage.getItem("isLogin"));
+    let isHaveValidToken = false;
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      let encToken = GetDecryptText(localStorage.getItem("authToken"));
+
+      const authEmail = encToken.split(",")[0];
+      const authPassword = encToken.split(",")[1];
+      isHaveValidToken = JSON.parse(localStorage.getItem("loginData")).some(
+        (item) => {
+          let temp = GetDecryptText(item);
+          let isTemp = false;
+          if (temp.email === authEmail && temp.password === authPassword) {
+            isTemp = true;
+          }
+          return isTemp;
+        }
+      );
     }
 
-  }, [navigate])
+    if (login && isHaveValidToken) {
+      navigate("/products");
+    } else {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const initialValues = {
-    email: "temp@mail.com",
-    password: "hardik@00110",
+    email: "",
+    password: "",
   };
+  // const initialValues = {
+  //   email: "demo@mail.com",
+  //   password: "Demo@123",
+  // };
   const onSubmit = (values) => {
-    const authToken = GetEncryptText((values.email + ',' + values.password))
+    const authToken = GetEncryptText(values.email + "," + values.password);
     if (IsHaveAccount(values)) {
       localStorage.setItem("isLogin", true);
-      localStorage.setItem('authToken', authToken)
+      localStorage.setItem("authToken", authToken);
       navigate("/products");
-      toast.success('Great to see you again! You\'ve been logged in', {
+      toast.success(messages.loginWelcome, {
         duration: 3000,
         style: {
-          textAlign: 'center',
+          textAlign: "center",
         },
-      })
+      });
     } else {
-      toast.error("Invalid Credentials")
+      toast.error(messages.invalidCredentials);
     }
   };
-
-
 
   const formik = useFormik({
     initialValues,
     onSubmit,
-    validationSchema: loginSchema
+    validationSchema: loginSchema,
   });
   return (
     <>
-
       <Flex
         minH={"100vh"}
         align={"center"}
@@ -72,7 +93,11 @@ export default function LoginPage() {
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
           <Stack align={"center"}>
             <Heading fontSize={"4xl"}>Log in to your account</Heading>
-            <Text _dark={{ color: 'gray.300' }} fontSize={"lg"} color={"gray.600"}>
+            <Text
+              _dark={{ color: "gray.300" }}
+              fontSize={"lg"}
+              color={"gray.600"}
+            >
               to view all of our cool products 🛒
             </Text>
           </Stack>
@@ -84,7 +109,10 @@ export default function LoginPage() {
           >
             <Form onSubmit={formik.handleSubmit}>
               <Stack spacing={4}>
-                <FormControl id="email" isInvalid={formik.errors.email && formik.touched.email}>
+                <FormControl
+                  id="email"
+                  isInvalid={formik.errors.email && formik.touched.email}
+                >
                   <FormLabel>Email address</FormLabel>
                   <Input
                     onBlur={formik.handleBlur}
@@ -92,9 +120,14 @@ export default function LoginPage() {
                     value={formik.values.email}
                     type="email"
                   />
-                  {formik.touched.email && <FormErrorMessage>{formik.errors.email}</FormErrorMessage>}
+                  {formik.touched.email && (
+                    <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                  )}
                 </FormControl>
-                <FormControl id="password" isInvalid={formik.errors.password && formik.touched.password}>
+                <FormControl
+                  id="password"
+                  isInvalid={formik.errors.password && formik.touched.password}
+                >
                   <FormLabel>Password</FormLabel>
                   <Input
                     onBlur={formik.handleBlur}
@@ -102,7 +135,11 @@ export default function LoginPage() {
                     value={formik.values.password}
                     type="password"
                   />
-                  {formik.touched.password && <FormErrorMessage>{formik.errors.password}</FormErrorMessage>}
+                  {formik.touched.password && (
+                    <FormErrorMessage>
+                      {formik.errors.password}
+                    </FormErrorMessage>
+                  )}
                 </FormControl>
                 <Stack spacing={10}>
                   <Stack

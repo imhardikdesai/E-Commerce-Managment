@@ -23,65 +23,63 @@ import SetLocalData from "../../functions/SetLocalData";
 import GetEncryptText from "../../functions/GetEncryptText";
 import { useEffect } from "react";
 import { signupSchema } from "../../validation/authValidation";
+import { messages } from "../../constant/messages";
 
 export default function SignUpPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    let login = JSON.parse(localStorage.getItem('isLogin'))
+    let login = JSON.parse(localStorage.getItem("isLogin"));
     if (login) {
-      navigate('/products')
+      navigate("/products");
     } else {
-      navigate('/signup')
+      navigate("/signup");
     }
     // eslint-disable-next-line
-  }, [navigate])
+  }, [navigate]);
   const initialValues = {
     firstName: "",
     lastName: "",
-    email: "temp@mail.com",
+    email: "",
     mobile: "",
     password: "",
     cPassword: "",
   };
   // const initialValues = {
-  //   firstName: "John",
-  //   lastName: "Doe",
-  //   email: "temp@mail.com",
-  //   mobile: "6352604118",
-  //   password: "hardik@00110",
-  //   cPassword: "hardik@00110",
+  //   firstName: "Hardik",
+  //   lastName: "Desai",
+  //   email: "demo@mail.com",
+  //   mobile: "7878787878",
+  //   password: "Demo@123",
+  //   cPassword: "Demo@123",
   // };
   const onSubmit = (values) => {
     const encData = GetEncryptText(values);
-    const authToken = GetEncryptText((values.email + ',' + values.password))
+    const authToken = GetEncryptText(values.email + "," + values.password);
     dispatch(authSetData(values));
 
     if (localStorage.getItem("loginData") === null) {
       SetLocalData(encData, true, authToken);
       navigate("/products");
-      toast.success('Congratulations, your account has been created successfully!', {
+      toast.success(messages.accountCreationSucess, {
         duration: 3000,
-      })
-
+      });
     } else if (CheckUserAuth(values)) {
-      toast.error('User Already Exists')
+      toast.error(messages.userAlerdyExists);
     } else {
       SetLocalData(encData, true, authToken);
       navigate("/products");
-      toast.success('Congratulations, your account has been created successfully!', {
+      toast.success(messages.accountCreationSucess, {
         duration: 3000,
-      })
+      });
     }
   };
-
 
   const formik = useFormik({
     initialValues,
     onSubmit,
-    validationSchema: signupSchema
+    validationSchema: signupSchema,
   });
-  console.log(formik.errors);
   return (
     <>
       <Flex
@@ -95,7 +93,11 @@ export default function SignUpPage() {
             <Heading fontSize={"4xl"} textAlign={"center"}>
               Sign up
             </Heading>
-            <Text _dark={{ color: 'gray.300' }} fontSize={"lg"} color={"gray.600"}>
+            <Text
+              _dark={{ color: "gray.300" }}
+              fontSize={"lg"}
+              color={"gray.600"}
+            >
               to view all of our cool products ✌️
             </Text>
           </Stack>
@@ -109,7 +111,12 @@ export default function SignUpPage() {
               <Form onSubmit={formik.handleSubmit}>
                 <HStack>
                   <Box>
-                    <FormControl id="firstName" isInvalid={formik.touched.firstName && formik.errors.firstName}>
+                    <FormControl
+                      id="firstName"
+                      isInvalid={
+                        formik.touched.firstName && formik.errors.firstName
+                      }
+                    >
                       <FormLabel>First Name</FormLabel>
                       <Input
                         value={formik.values.firstName}
@@ -117,7 +124,11 @@ export default function SignUpPage() {
                         onBlur={formik.handleBlur}
                         type="text"
                       />
-                      {formik.touched.firstName && <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>}
+                      {formik.touched.firstName && (
+                        <FormErrorMessage>
+                          {formik.errors.firstName}
+                        </FormErrorMessage>
+                      )}
                     </FormControl>
                   </Box>
                   <Box>
@@ -132,7 +143,10 @@ export default function SignUpPage() {
                   </Box>
                 </HStack>
 
-                <FormControl id="email" isInvalid={formik.touched.email && formik.errors.email}>
+                <FormControl
+                  id="email"
+                  isInvalid={formik.touched.email && formik.errors.email}
+                >
                   <FormLabel>Email address</FormLabel>
                   <Input
                     value={formik.values.email}
@@ -140,10 +154,15 @@ export default function SignUpPage() {
                     onBlur={formik.handleBlur}
                     type="email"
                   />
-                  {formik.touched.email && <FormErrorMessage>{formik.errors.email}</FormErrorMessage>}
+                  {formik.touched.email && (
+                    <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                  )}
                 </FormControl>
 
-                <FormControl id="mobile" isInvalid={formik.touched.mobile && formik.errors.mobile}>
+                <FormControl
+                  id="mobile"
+                  isInvalid={formik.touched.mobile && formik.errors.mobile}
+                >
                   <FormLabel>Mobile Number</FormLabel>
                   <Input
                     value={formik.values.mobile}
@@ -151,10 +170,15 @@ export default function SignUpPage() {
                     onBlur={formik.handleBlur}
                     type="tel"
                   />
-                  {formik.touched.mobile && <FormErrorMessage>{formik.errors.mobile}</FormErrorMessage>}
+                  {formik.touched.mobile && (
+                    <FormErrorMessage>{formik.errors.mobile}</FormErrorMessage>
+                  )}
                 </FormControl>
 
-                <FormControl id="password" isInvalid={formik.touched.password && formik.errors.password}>
+                <FormControl
+                  id="password"
+                  isInvalid={formik.touched.password && formik.errors.password}
+                >
                   <FormLabel>Password</FormLabel>
                   <Input
                     value={formik.values.password}
@@ -162,10 +186,18 @@ export default function SignUpPage() {
                     onBlur={formik.handleBlur}
                     type="password"
                   />
-                  {formik.touched.password && <FormErrorMessage>{formik.errors.password}</FormErrorMessage>}
-
+                  {formik.touched.password && (
+                    <FormErrorMessage>
+                      {formik.errors.password}
+                    </FormErrorMessage>
+                  )}
                 </FormControl>
-                <FormControl id="cPassword" isInvalid={formik.touched.cPassword && formik.errors.cPassword}>
+                <FormControl
+                  id="cPassword"
+                  isInvalid={
+                    formik.touched.cPassword && formik.errors.cPassword
+                  }
+                >
                   <FormLabel>Confirm Password</FormLabel>
                   <Input
                     value={formik.values.cPassword}
@@ -173,8 +205,11 @@ export default function SignUpPage() {
                     onBlur={formik.handleBlur}
                     type="password"
                   />
-                  {formik.touched.cPassword && <FormErrorMessage>{formik.errors.cPassword}</FormErrorMessage>}
-
+                  {formik.touched.cPassword && (
+                    <FormErrorMessage>
+                      {formik.errors.cPassword}
+                    </FormErrorMessage>
+                  )}
                 </FormControl>
 
                 <Stack spacing={10} pt={2}>
