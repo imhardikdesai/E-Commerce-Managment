@@ -19,7 +19,7 @@ import IsHaveAccount from "../../functions/IsHaveAccount";
 import { useEffect } from "react";
 import { loginSchema } from "../../validation/authValidation";
 import GetDecryptText from "../../functions/GetDecryptText";
-import GetEncryptText from '../../functions/GetEncryptText'
+import GetEncryptText from "../../functions/GetEncryptText";
 import { messages } from "../../constant/messages";
 
 export default function LoginPage() {

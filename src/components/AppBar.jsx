@@ -22,6 +22,7 @@ import { NavLink as RouteLink } from "react-router-dom";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { toast } from "react-hot-toast";
 import { messages } from "../constant/messages";
+import GetProfileData from "../functions/GetProfileData";
 
 const LinksText = ["Home"];
 
@@ -126,7 +127,7 @@ export default function AppBar({ status }) {
                   <Avatar
                     size={"sm"}
                     src={
-                      "https://ca.slack-edge.com/T3HG71ULS-U04M1JEGZ28-fc0e656f95a1-512"
+                      "https://cdn-icons-png.flaticon.com/512/6915/6915987.png"
                     }
                   />
                 </MenuButton>
@@ -136,13 +137,13 @@ export default function AppBar({ status }) {
                     <Avatar
                       size={"2xl"}
                       src={
-                        "https://ca.slack-edge.com/T3HG71ULS-U04M1JEGZ28-fc0e656f95a1-512"
+                        "https://cdn-icons-png.flaticon.com/512/6915/6915987.png"
                       }
                     />
                   </Center>
                   <br />
                   <Center>
-                    <p>Hardik Desai</p>
+                    <p>{GetProfileData().firstName + " " + GetProfileData().lastName} </p>
                   </Center>
                   <br />
                   <MenuDivider />
