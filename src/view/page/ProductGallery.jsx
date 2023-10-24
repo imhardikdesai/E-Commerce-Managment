@@ -28,8 +28,42 @@ const ProductGallery = () => {
     dispatch(updateFetchProduct(index * limit, limit));
   };
 
+  const maxVisiblePages = 3;
+
   let items = [];
-  for (let number = 0; number <= total / limit; number++) {
+
+  let startPage = Math.max(0, active - Math.floor(maxVisiblePages / 2));
+  let endPage = Math.min(
+    Math.ceil(total / limit) - 1,
+    startPage + maxVisiblePages - 1
+  );
+
+  while (endPage - startPage < maxVisiblePages - 1) {
+    if (startPage > 0) {
+      startPage--;
+    } else if (endPage < Math.ceil(total / limit) - 1) {
+      endPage++;
+    }
+  }
+
+  items.push(
+    <Pagination.Item
+      onClick={() => handlePageClick(0)}
+      key={0}
+      active={active === 0}
+    >
+      1
+    </Pagination.Item>
+  );
+
+  if (startPage > 1) {
+    items.push(
+      <Pagination.Ellipsis key="ellipsis-start" />
+    );
+  }
+
+
+  for (let number = startPage + 1; number <= endPage - 1; number++) {
     items.push(
       <Pagination.Item
         onClick={() => handlePageClick(number)}
@@ -40,6 +74,22 @@ const ProductGallery = () => {
       </Pagination.Item>
     );
   }
+
+  if (endPage < Math.ceil(total / limit) - 2) {
+    items.push(
+      <Pagination.Ellipsis key="ellipsis-end" />
+    );
+  }
+
+  items.push(
+    <Pagination.Item
+      onClick={() => handlePageClick(Math.ceil(total / limit) - 1)}
+      key={Math.ceil(total / limit) - 1}
+      active={active === Math.ceil(total / limit) - 1}
+    >
+      {Math.ceil(total / limit)}
+    </Pagination.Item>
+  );
 
 
   return (
@@ -55,10 +105,16 @@ const ProductGallery = () => {
       <div className="d-flex justify-content-center mt-2 mb-4 pagination-footer">
         <Pagination
           className="flex-wrap justify-content-center pagination-sub"
-          size="lg"
+          size="lg" 
         >
+           <Pagination.First onClick={() => handlePageClick(0)} />
+          <Pagination.Prev onClick={() => handlePageClick(active - 1)} />
           {items}
-        </Pagination>
+          <Pagination.Next onClick={() => handlePageClick(active + 1)} />
+          <Pagination.Last onClick={() => handlePageClick(Math.ceil(total / limit) - 1)}>
+         
+          </Pagination.Last>
+          </Pagination>
       </div>
     </>
   );
